@@ -2,7 +2,18 @@ extends ../layouts/common
 block content
   h1 Create User
 
-  form(action="/users/create", method="post")
-    label Name
-    input(type="text", name="name")
-    button Create
+  .row
+    .col-lg-6
+
+      if errors
+        each err in errors
+          .alert.alert-danger= err
+
+      form(action="/users/create", method="post")
+        .form-group
+          label Name
+          input.form-control(type="text", name="name", value=values ? values.name : "")
+        .form-group
+          label Phone
+          input.form-control(type="text", name="phone", value=values ? values.phone : "")
+        button.btn.btn-primary Create

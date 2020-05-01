@@ -1,23 +1,28 @@
 extends ../layouts/common
 block content
-  h1 Users
-
   .row
     .col-md-12.col-lg-6
-      form.d-flex(action="/users/search", method="get")
+      h1.d-inline.mr-2 Users
+      a.btn.btn-primary.mb-3(href="/users/create") New
+    .col-md-12.col-lg-6
+      form.d-flex.mt-2(action="/users/search", method="get")
         input.form-control.mr-2(type="text", name="name", id="inputSearch")
         button.btn.btn-primary Search
 
-  a.btn.btn-primary(href="/users/create") New
+  table.table.text-center.mt-2
+    tr
+      th Name
+      th Phone
+      th Actions
 
-  ul
     each user in users
-      li
-        span= user.name 
-        | 
-        a(href="/users/view/" + user.id) View 
-        |- 
-        a(href="/users/del/" + user.id) Delete
+      tr
+        td= user.name 
+        td= user.phone
+        td 
+          a.btn.btn-sm.btn-dark(href="/users/view/" + user.id) View 
+          span.ml-1.mr-1
+          a.btn.btn-sm.btn-dark(href="/users/del/" + user.id) Delete
         
   //- script to hold the value in input field
   script.
