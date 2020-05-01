@@ -32,7 +32,7 @@ app.get('/users', function(req, res) {
 
 app.get('/users/search', function(req, res) {
   var searchName = req.query.name;
-  var matchedUsers = users.filter(function(user) {
+  var matchedUsers = db.get('users').value().filter(function(user) {
     return user.name.toLowerCase().indexOf(searchName.toLowerCase()) !== -1;
   });
 

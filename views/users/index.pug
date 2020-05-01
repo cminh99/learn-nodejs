@@ -9,11 +9,11 @@ a(href="/users/create") New
 ul
   each user in users
     li= user.name
-
-  //- script to hold the value in input field
-  script.
-    var input = document.getElementById('inputSearch');
-    input.addEventListener('change', function() {
-      sessionStorage.setItem('searchInput', input.value);
-    });
-    input.value = sessionStorage.getItem('searchInput');
+      
+//- script to hold the value in input field
+script.
+  var input = document.getElementById('inputSearch');
+  input.addEventListener('change', function() {
+    sessionStorage.setItem('searchInput', input.value);
+  });
+  input.value = sessionStorage.getItem('searchInput');
