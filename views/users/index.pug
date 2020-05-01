@@ -4,10 +4,11 @@ form(action="/users/search", method="get")
   input(type="text", name="name", id="inputSearch")
   button Search
 
+a(href="/users/create") New
+
 ul
   each user in users
     li= user.name
-
 
   //- script to hold the value in input field
   script.
