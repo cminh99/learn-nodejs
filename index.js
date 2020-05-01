@@ -55,6 +55,12 @@ app.get('/users/:id', function(req, res) {
   });
 });
 
+app.get('/users/del/:id', function(req, res) {
+  var id = req.params.id;
+  db.get('users').remove({ id: id }).write();
+  res.redirect('/users');
+});
+
 /** post routes */
 app.post('/users/create', function(req, res) {
   req.body.id = shortid.generate();
