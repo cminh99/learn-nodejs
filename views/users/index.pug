@@ -1,24 +1,28 @@
-h1 Users
+extends ../layouts/common
+block content
+  h1 Users
 
-form(action="/users/search", method="get")
-  input(type="text", name="name", id="inputSearch")
-  button Search
+  .row
+    .col-md-12.col-lg-6
+      form.d-flex(action="/users/search", method="get")
+        input.form-control.mr-2(type="text", name="name", id="inputSearch")
+        button.btn.btn-primary Search
 
-a(href="/users/create") New
+  a.btn.btn-primary(href="/users/create") New
 
-ul
-  each user in users
-    li
-      span= user.name
-      | 
-      a(href="/users/" + user.id) View
-      | 
-      a(href="/users/del/" + user.id) Delete
-      
-//- script to hold the value in input field
-script.
-  var input = document.getElementById('inputSearch');
-  input.addEventListener('change', function() {
-    sessionStorage.setItem('searchInput', input.value);
-  });
-  input.value = sessionStorage.getItem('searchInput');
+  ul
+    each user in users
+      li
+        span= user.name 
+        | 
+        a(href="/users/" + user.id) View 
+        |- 
+        a(href="/users/del/" + user.id) Delete
+        
+  //- script to hold the value in input field
+  script.
+    var input = document.getElementById('inputSearch');
+    input.addEventListener('change', function() {
+      sessionStorage.setItem('searchInput', input.value);
+    });
+    input.value = sessionStorage.getItem('searchInput');
