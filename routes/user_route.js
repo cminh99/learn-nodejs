@@ -16,4 +16,10 @@ router.get('/del/:id', controller.delete);
 
 router.post('/create', validate.postCreate, controller.postCreate);
 
+/** test cookie */
+router.get('/cookie', function(req, res, next) {
+  res.cookie('userId', 12345);
+  res.send('Hello Cookie');
+});
+
 module.exports = router;
