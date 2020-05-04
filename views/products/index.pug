@@ -46,14 +46,16 @@ block content
     var currentPage = window.location.search.substring(1) || 'page=1';
     var items = document.getElementsByClassName('page-item');
     var links = document.getElementsByClassName('page-link');
-    
-    if(currentPage === 'page=1') 
-      document.getElementById('pre').classList.add('disabled');
-    if(currentPage === 'page=7')
-      document.getElementById('next').classList.add('disabled');
 
-    for(let i = 0; i < links.length; i++) {
-      if(links[i].href.indexOf(currentPage) !== -1) {
+    for (let i = 0; i < links.length; i++) {
+      let splitLink = links[i].href.split('/');
+      let page = splitLink[3].split('?');
+
+      if (page[1] === currentPage)
         items[i].classList.add('active');
-      }
     }
+
+    if (currentPage === 'page=1')
+      items[0].classList.add('disabled');
+    if (currentPage === ('page=' + (items.length - 2)))
+      items[items.length - 1].classList.add('disabled');
