@@ -11,13 +11,29 @@ block content
   .row.mt-5
     each product in products
       .col-sm-12.col-md-4.col-lg-3
-        .card.mb-5
+        .card.mb-3
           .card-img-top(src= product.image)
           .card-body
             h5.card-title= product.name
             p.card-text= product.description
             a.btn.btn-sm.btn-primary(href="") Add to cart
-        
+    
+  .row.justify-content-center.m-5
+    .col-sm-12.col-md-4.col-lg-3
+      ul.pagination
+        li#pre.page-item
+          a.page-link(href="/products?page=" + (page-1))
+            span &laquo;
+        if numberOfPages <= 10
+          - let n = 0;
+            while n < numberOfPages
+              li.page-item
+                a.page-link(href="/products?page=" + (++n))= n
+        li#next.page-item
+          a.page-link(href="/products?page=" + (page+1))
+            span &raquo;
+
+
   script.
     //- script to hold the value in input field
     var input = document.getElementById('inputSearch');
@@ -25,3 +41,19 @@ block content
       sessionStorage.setItem('searchInput', input.value);
     });
     input.value = sessionStorage.getItem('searchInput');
+
+    //- script to pagination
+    var currentPage = window.location.search.substring(1) || 'page=1';
+    var items = document.getElementsByClassName('page-item');
+    var links = document.getElementsByClassName('page-link');
+    
+    if(currentPage === 'page=1') 
+      document.getElementById('pre').classList.add('disabled');
+    if(currentPage === 'page=7')
+      document.getElementById('next').classList.add('disabled');
+
+    for(let i = 0; i < links.length; i++) {
+      if(links[i].href.indexOf(currentPage) !== -1) {
+        items[i].classList.add('active');
+      }
+    }
