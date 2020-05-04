@@ -1,8 +1,11 @@
 const express = require('express');
-const router = express.Router();
+const multer  = require('multer');
 
 const controller = require('../controllers/users_controller');
 const validate = require('../middlewares/user_validate');
+
+const upload = multer({ dest: './public/uploads/' });
+const router = express.Router();
 
 router.get('/', controller.index);
 
@@ -14,7 +17,11 @@ router.get('/view/:id', controller.view);
 
 router.get('/del/:id', controller.delete);
 
-router.post('/create', validate.postCreate, controller.postCreate);
+router.post('/create',
+  upload.single('avatar'),
+  validate.postCreate,
+  controller.postCreate
+);
 
 /** test cookie */
 router.get('/cookie', function(req, res, next) {
