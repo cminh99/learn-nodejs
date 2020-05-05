@@ -1,13 +1,15 @@
 require('dotenv').config();
 
 const express = require('express');
-const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const csurf = require('csurf');
 
 const authRoute = require('./routes/auth_route');
 const userRoute = require('./routes/user_route');
 const productRoute = require('./routes/product_route');
 const cartRoute = require('./routes/cart_route');
+const transferRoute = require('./routes/transfer_route');
 
 const authMiddleware = require('./middlewares/auth_middleware');
 const sessionMiddleware = require('./middlewares/session_middleware');
@@ -33,8 +35,10 @@ app.get('/', function(req, res) {
 });
 
 app.use('/auth', authRoute);
+app.use(csurf({ cookie: true }));
 app.use('/users', authMiddleware.requireAuth, userRoute);
 app.use('/products', productRoute);
 app.use('/cart', cartRoute);
+app.use('/transfer', authMiddleware.requireAuth, transferRoute);
 
 app.listen(port, () => console.log(`Example app listening at port ${port}`));
