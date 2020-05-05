@@ -24,9 +24,20 @@ html(lang="en")
             a.nav-link(href='/users') Users
           li.nav-item
             a.nav-link(href='/products') Products
-      
+    
+      p.m-auto.pr-5.text-light Cart
+        span#cart
+
       if user
         p.m-auto.text-light= user.name
 
     .container.mt-5
       block content
+
+    //- script to show cart
+    script.
+      let cookies = document.cookie.split(';').sort();
+      if(cookies[0].indexOf('countCart=') !== -1) {
+        let countCart = cookies[0].trim().split('=');
+        document.getElementById('cart').innerHTML = '(' + countCart[1] + ')';
+      }
