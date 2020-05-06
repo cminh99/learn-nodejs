@@ -15,4 +15,10 @@ module.exports.index = function(req, res) {
     numberOfPages: numberOfPages,
     page: page
   });
+
+  // add async keyword before starting the function
+  // var products = await Product.find();
+  // res.render('products/index', {
+  //   products: products
+  // });
 };

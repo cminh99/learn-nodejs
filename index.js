@@ -4,6 +4,9 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const csurf = require('csurf');
+const mongoose = require('mongoose');
+
+mongoose.connect(process.env.MONGO_URL, { useUnifiedTopology: true, useNewUrlParser: true });
 
 const authRoute = require('./routes/auth_route');
 const userRoute = require('./routes/user_route');
@@ -35,10 +38,10 @@ app.get('/', function(req, res) {
 });
 
 app.use('/auth', authRoute);
-app.use(csurf({ cookie: true }));
 app.use('/users', authMiddleware.requireAuth, userRoute);
 app.use('/products', productRoute);
 app.use('/cart', cartRoute);
 app.use('/transfer', authMiddleware.requireAuth, transferRoute);
+app.use(csurf({ cookie: true }));
 
 app.listen(port, () => console.log(`Example app listening at port ${port}`));
