@@ -1,18 +1,23 @@
-const db = require('../db');
+const Product = require('../models/product_model');
 
-module.exports.index = function(req, res) {
-  var page = parseInt(req.query.page) || 1;
-  var perPage = 8;
+module.exports.index = async function(req, res) {
+  // var page = parseInt(req.query.page) || 1;
+  // var perPage = 8;
 
-  var start = (page - 1) * perPage;
-  var end = page * perPage;
+  // var start = (page - 1) * perPage;
+  // var end = page * perPage;
 
-  var getProducts = db.get('products').value();
-  var numberOfPages = getProducts.length / perPage;
+  // var getProducts = db.get('products').value();
+  // var numberOfPages = getProducts.length / perPage;
 
+  // res.render('products/index', {
+  //   products: getProducts.slice(start, end),
+  //   numberOfPages: numberOfPages,
+  //   page: page
+  // });
+
+  var products = await Product.find();
   res.render('products/index', {
-    products: getProducts.slice(start, end),
-    numberOfPages: numberOfPages,
-    page: page
+    products: products
   });
 };
