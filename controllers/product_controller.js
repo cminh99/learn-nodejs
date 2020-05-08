@@ -16,7 +16,7 @@ module.exports.index = function(req, res) {
     page: page
   });
 
-  // add async keyword before starting the function
+  /** add async keyword before starting the function */
   // var products = await Product.find();
   // res.render('products/index', {
   //   products: products
