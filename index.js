@@ -32,6 +32,8 @@ app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-
 app.use(cookieParser(process.env.SESSION_SECRET));
 app.use(sessionMiddleware);
 
+app.use('/api/products', apiProductRoute);
+
 /** routes */
 app.get('/', function(req, res) {
   res.render('index', {
@@ -44,7 +46,6 @@ app.use('/users', authMiddleware.requireAuth, userRoute);
 app.use('/products', productRoute);
 app.use('/cart', cartRoute);
 app.use('/transfer', authMiddleware.requireAuth, transferRoute);
-app.use('/api/products', apiProductRoute);
-app.use(csurf({ cookie: true }));
+// app.use(csurf({ cookie: true }));
 
 app.listen(port, () => console.log(`Example app listening at port ${port}`));
