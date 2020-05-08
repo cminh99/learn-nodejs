@@ -17,6 +17,8 @@ const transferRoute = require('./routes/transfer_route');
 const authMiddleware = require('./middlewares/auth_middleware');
 const sessionMiddleware = require('./middlewares/session_middleware');
 
+const apiProductRoute = require('./api/routes/product_route');
+
 const port = 3000;
 const app = express();
 
@@ -42,6 +44,7 @@ app.use('/users', authMiddleware.requireAuth, userRoute);
 app.use('/products', productRoute);
 app.use('/cart', cartRoute);
 app.use('/transfer', authMiddleware.requireAuth, transferRoute);
+app.use('/api/products', apiProductRoute);
 app.use(csurf({ cookie: true }));
 
 app.listen(port, () => console.log(`Example app listening at port ${port}`));
