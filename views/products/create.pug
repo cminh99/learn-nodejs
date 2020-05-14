@@ -1,0 +1,26 @@
+extends ../layouts/common
+block content
+  h1 Create Product
+
+  .row.mt-5
+    .col-lg-6
+
+      if errors
+        each err in errors
+          .alert.alert-danger= err
+
+      form(action="/products/create", method="post", enctype="multipart/form-data")
+        .form-group
+          label(for="image") Image
+          input#image.form-control-file(type="file", name="image")
+        .form-group
+          label(for="name") Name
+          input#name.form-control(type="text", name="name", value=values ? values.name : "")
+        .form-group
+          label(for="description") Description
+          input#description.form-control(type="text", name="description", value=values ? values.name : "")
+        .form-group
+          label(for="price") Price
+          input#price.form-control(type="number", name="price", value=values ? values.name : "")
+        
+        button.btn.btn-primary Create

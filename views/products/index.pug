@@ -3,6 +3,7 @@ block content
   .row
     .col-md-12.col-lg-6
       h1.d-inline.mr-2 Products
+      a.btn.btn-primary.mb-3(href="/products/create") New
     .col-md-12.col-lg-6
       form.d-flex.mt-2(action="/products/search", method="get")
         input.form-control.mr-2(type="text", name="name", id="inputSearch")
@@ -38,9 +39,9 @@ block content
     //- script to hold the value in input field
     var input = document.getElementById('inputSearch');
     input.addEventListener('change', function() {
-      sessionStorage.setItem('searchInput', input.value);
+      sessionStorage.setItem('searchProduct', input.value);
     });
-    input.value = sessionStorage.getItem('searchInput');
+    input.value = sessionStorage.getItem('searchProduct');
 
     //- script to pagination
     var currentPage = window.location.search.substring(1) || 'page=1';

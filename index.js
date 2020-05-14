@@ -46,6 +46,6 @@ app.use('/users', authMiddleware.requireAuth, userRoute);
 app.use('/products', productRoute);
 app.use('/cart', cartRoute);
 app.use('/transfer', authMiddleware.requireAuth, transferRoute);
-// app.use(csurf({ cookie: true }));
+app.use(csurf({ cookie: true }));
 
 app.listen(port, () => console.log(`Example app listening at port ${port}`));

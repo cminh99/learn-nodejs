@@ -1,18 +1,19 @@
 const md5 = require('md5');
-const db = require('../db');
+const User = require('../models/user_model');
 
 module.exports.login = function(req, res, next) {
   res.render('auth/login');
 };
 
-module.exports.postLogin = function(req, res, next) {
+module.exports.postLogin = async function(req, res, next) {
   var email = req.body.email;
   var password = req.body.password;
   var hashedPassword = md5(password);
 
-  var user = db.get('users').find({ email: email }).value();
+  // var user = db.get('users').find({ email: email }).value();
+  var user = await User.find({ email: email });
 
-  if(!user) {
+  if(!user.length) {
     res.render('auth/login', {
       errors: [
         'User does not exist!'
@@ -22,7 +23,7 @@ module.exports.postLogin = function(req, res, next) {
     return;
   }
 
-  if(user.password !== hashedPassword) {
+  if(user[0].password !== hashedPassword) {
     res.render('auth/login', {
       errors: [
         'Wrong password!'
@@ -32,7 +33,7 @@ module.exports.postLogin = function(req, res, next) {
     return;
   }
 
-  res.cookie('userId', user.id, {
+  res.cookie('userId', user[0]._id, {
     signed: true
   });
   res.redirect('/users');

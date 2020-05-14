@@ -31,6 +31,6 @@ block content
   script.
     var input = document.getElementById('inputSearch');
     input.addEventListener('change', function() {
-      sessionStorage.setItem('searchInput', input.value);
+      sessionStorage.setItem('searchUser', input.value);
     });
-    input.value = sessionStorage.getItem('searchInput');
+    input.value = sessionStorage.getItem('searchUser');
