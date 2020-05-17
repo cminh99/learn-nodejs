@@ -19,7 +19,7 @@ const sessionMiddleware = require('./middlewares/session_middleware');
 
 const apiProductRoute = require('./api/routes/product_route');
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 const app = express();
 
 /** config */
