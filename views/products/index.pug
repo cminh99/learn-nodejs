@@ -13,7 +13,7 @@ block content
     each product in products
       .col-sm-12.col-md-4.col-lg-3
         .card.mb-3
-          .card-img-top(src= product.image)
+          img.card-img-top(src= product.image, height="240")
           .card-body
             h5.card-title= product.name
             p.card-text= product.description
@@ -21,18 +21,19 @@ block content
     
   .row.justify-content-center.m-5
     .col-sm-12.col-md-4.col-lg-3
-      ul.pagination
-        li#pre.page-item
-          a.page-link(href="/products?page=" + (page-1))
-            span &laquo;
-        if numberOfPages <= 10
-          - let n = 0;
-            while n < numberOfPages
-              li.page-item
-                a.page-link(href="/products?page=" + (++n))= n
-        li#next.page-item
-          a.page-link(href="/products?page=" + (page+1))
-            span &raquo;
+      if numberOfPages >= 2
+        ul.pagination
+          li#pre.page-item
+            a.page-link(href="/products?page=" + (page-1))
+              span &laquo;
+          if numberOfPages <= 10
+            - let n = 0;
+              while n < numberOfPages
+                li.page-item
+                  a.page-link(href="/products?page=" + (++n))= n
+          li#next.page-item
+            a.page-link(href="/products?page=" + (page+1))
+              span &raquo;
 
 
   script.

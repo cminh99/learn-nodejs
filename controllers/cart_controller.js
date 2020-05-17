@@ -29,6 +29,6 @@ module.exports.addToCart = function(req, res, next) {
     .size()
     .value();
 
-  res.cookie('countCart', countCart);
+  res.cookie('.1countCart', countCart);
   res.redirect('/products');
 };
