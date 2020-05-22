@@ -1,3 +1,5 @@
+require('../config/cloudinary');
+const cloudinary = require('cloudinary').v2;
 const User = require('../models/user_model');
 
 module.exports.index = async function(req, res) {
@@ -17,10 +19,6 @@ module.exports.search = async function(req, res) {
     return user.name.toLowerCase().indexOf(searchName.toLowerCase()) !== -1;
   });
 
-  for(let user of matchedUsers) {
-    user.avatar = 'http://localhost:3000/' + user.avatar;
-  }
-
   res.render('users/index', {
     users: matchedUsers
   });
@@ -29,8 +27,6 @@ module.exports.search = async function(req, res) {
 module.exports.view = async function(req, res) {
   var id = req.params.id;
   var user = await User.find({ _id: id });
-
-  user[0].avatar = 'http://localhost:3000/' + user[0].avatar;
 
   res.render('users/view', {
     user: user[0]
@@ -44,14 +40,18 @@ module.exports.delete = async function(req, res) {
 };
 
 module.exports.postCreate = async function(req, res) {
+  var result;
   if(!req.file) {
     req.body.avatar = 'images/default-profile.png';  
   } else {
-    // Window => \\
-    // MaxOS/Linux => /
-    req.body.avatar = req.file.path.split('\\').slice(1).join('/');
+    result = await cloudinary.uploader.upload(req.file.path, {
+      folder: 'demo-nodeapp/avatars',
+      use_filename: true
+    });
+    
+    req.body.avatar = result.secure_url;
   }
-  
+
   await User.insertMany(req.body);
   res.redirect('/users');
 };

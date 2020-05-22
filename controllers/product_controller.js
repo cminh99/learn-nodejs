@@ -1,3 +1,5 @@
+require('../config/cloudinary');
+const cloudinary = require('cloudinary').v2;
 const Product = require('../models/product_model');
 
 module.exports.index = async function(req, res) {
@@ -35,17 +37,18 @@ module.exports.create = function(req, res) {
 };
 
 module.exports.postCreate = async function(req, res) {
-  var imgPath = req.file.path.split('\\').slice(1).join('/');
-  req.body.image = imgPath;
-  req.body.price = parseInt(req.body.price);
+  var result, imageUrl;
+  if(!req.file) {
+    req.body.image = 'images/default-product.png';
+  } else {
+    result = await cloudinary.uploader.upload(req.file.path, {
+      folder: 'demo-nodeapp/products',
+      use_filename: true
+    });
 
-  var product = new Product({
-    name: req.body.name,
-    image: req.body.image,
-    description: req.body.description,
-    price: req.body.price
-  });
+    req.body.image = result.secure_url;
+  }
 
-  await Product.insertMany(product);
+  await Product.insertMany(req.body);
   res.redirect('/products');
 };
