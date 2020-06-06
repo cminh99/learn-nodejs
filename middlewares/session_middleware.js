@@ -10,7 +10,7 @@ module.exports = async function(req, res, next) {
     });
     
     var newSession = new Session({
-      id: sessionId,
+      sessionId: sessionId,
       cart: []
     });
     await newSession.save();
