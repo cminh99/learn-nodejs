@@ -37,18 +37,18 @@ module.exports.create = function(req, res) {
 };
 
 module.exports.postCreate = async function(req, res) {
-  var result, imageUrl;
   if(!req.file) {
     req.body.image = 'images/default-product.png';
   } else {
-    result = await cloudinary.uploader.upload(req.file.path, {
+    var result = await cloudinary.uploader.upload(req.file.path, {
       folder: 'demo-nodeapp/products',
       use_filename: true
     });
-
     req.body.image = result.secure_url;
   }
 
-  await Product.insertMany(req.body);
+  var newProduct = new Product(req.body);
+  await newProduct.save();
+
   res.redirect('/products');
 };

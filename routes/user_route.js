@@ -22,10 +22,4 @@ router.post('/create',
   controller.postCreate
 );
 
-/** test cookie */
-router.get('/cookie', function(req, res, next) {
-  res.cookie('userId', 12345);
-  res.send('Hello Cookie');
-});
-
 module.exports = router;

@@ -26,10 +26,10 @@ module.exports.search = async function(req, res) {
 
 module.exports.view = async function(req, res) {
   var id = req.params.id;
-  var user = await User.find({ _id: id });
+  var user = await User.findOne({ _id: id });
 
   res.render('users/view', {
-    user: user[0]
+    user: user
   });
 };
 
@@ -40,18 +40,18 @@ module.exports.delete = async function(req, res) {
 };
 
 module.exports.postCreate = async function(req, res) {
-  var result;
   if(!req.file) {
     req.body.avatar = 'images/default-profile.png';  
   } else {
-    result = await cloudinary.uploader.upload(req.file.path, {
+    var result = await cloudinary.uploader.upload(req.file.path, {
       folder: 'demo-nodeapp/avatars',
       use_filename: true
     });
-    
     req.body.avatar = result.secure_url;
   }
 
-  await User.insertMany(req.body);
+  var newUser = new User(req.body);
+  await newUser.save();
+  
   res.redirect('/users');
 };
